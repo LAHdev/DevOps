@@ -16,7 +16,7 @@ jobs:
               - name: Install node
                 run: | 
                       sudo apt update 
-                      sudo apt install node.js=16.13.1
+                      sudo apt install nodejs=16.13.1
 
               - name: Install dependencies
                 run:  npm install
