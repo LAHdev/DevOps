@@ -23,6 +23,14 @@ jobs:
                 run: |
                       cd capstone_project/hello-world/
                       npm run test
+                id: nodetest
+                
+              - name: Run container
+                if: ${{ steps.test.outcome == 'success' }}
+                run: |
+                      docker build -t hello-world-img .
+                      docker run --name hello-world -p 3000:3000 -itd hello-world-img
+                      docker logs --follow hello-world
 
 
     
