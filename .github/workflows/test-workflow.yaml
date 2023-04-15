@@ -1,0 +1,29 @@
+name:  Test workflow
+
+on:
+  push: 
+  pull_request: 
+  workflow_dispatch:
+
+jobs:
+    myfirstjob:
+              name: Run tests
+              runs-on: ubuntu-latest
+              steps:
+              - name: Load repository
+                uses: actions/checkout@v3
+
+              - name: Install dependencies
+                run:  | 
+                      cd capstone_project/hello-world/
+                      npm install
+                      pwd
+                      ls                     
+              - name: Run tests
+                run: |
+                      cd capstone_project/hello-world/
+                      npm run test
+
+
+    
+    
