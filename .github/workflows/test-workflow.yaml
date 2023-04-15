@@ -27,7 +27,7 @@ jobs:
                 
     runContainerJob:  
                     needs: [testJob]
-                    name: Run container
+                    name: Build container
                     runs-on: ubuntu-latest
                     steps:    
                     - name: Run container
@@ -38,6 +38,11 @@ jobs:
                             docker build -t hello-world-img .
                             docker run --name hello-world -p 3000:3000 -itd hello-world-img
                             docker ps
+                      
+                    - name: Not run the container
+                      if: ${{ steps.test.outcome != 'success' }}
+                      run: echo ${{ steps.test.outcome}}
+                      
 
 
     
