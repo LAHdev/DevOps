@@ -18,8 +18,9 @@ jobs:
                       cd capstone_project/hello-world/
                       npm install
                       pwd
-                      ls
-                      npm run test
+                      ls                     
+              - name: Run tests
+                run: npm run test
 
 
     
