@@ -36,7 +36,11 @@ jobs:
               uses: actions/checkout@v2
 
             - name: Build Docker image
-              run: echo ${{ needs.testJob.result}}
+              run: |
+                    docker build -t hello-world-img .
+                    docker run --name hello-world -p 3000:3000 -itd hello-world-img
+                    docker ps
+                    docker logs hello-world
 
 
     
