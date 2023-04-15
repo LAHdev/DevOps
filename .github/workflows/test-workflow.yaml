@@ -13,16 +13,6 @@ jobs:
               - name: Load repository
                 uses: actions/checkout@v3
 
-              - name: Install node
-                run: | 
-                      sudo apt update 
-                      sudo apt install curl wget gnupg
-                      curl -fsSL https://deb.nodesource.com/gpgkey/nodesource.gpg.key | sudo apt-key add -
-                      sudo add-apt-repository "deb https://deb.nodesource.com/node_16.x $(lsb_release -cs) main"
-                      sudo apt update
-                      sudo apt install nodejs=16.13.1-deb-1nodesource1
-
-
               - name: Install dependencies
                 run:  npm install
 
