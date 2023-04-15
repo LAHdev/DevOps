@@ -23,26 +23,20 @@ jobs:
                 run: |
                       cd capstone_project/hello-world/
                       npm run test
-                id: nodetest
+              - name: Check for success
+                if: ${{ success() }}
+                run: echo "success"
                 
-    runContainerJob:  
-                    needs: [testJob]
-                    name: Build container
-                    runs-on: ubuntu-latest
-                    steps:    
-                    - name: Run container
-                      if: ${{ steps.test.outcome == 'success' }}
-                      run: |
-                            cd capstone_project/hello-world/
-                            pwd
-                            docker build -t hello-world-img .
-                            docker run --name hello-world -p 3000:3000 -itd hello-world-img
-                            docker ps
-                      
-                    - name: Not run the container
-                      if: ${{ steps.test.outcome != 'success' }}
-                      run: echo ${{ steps.test.outcome}}
-                      
+    build-docker:
+          needs: testJob
+          runs-on: ubuntu-latest
+          if: ${{ needs.test.result == 'success' }}
+          steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+
+            - name: Build Docker image
+              run: echo "Build image here"
 
 
     
