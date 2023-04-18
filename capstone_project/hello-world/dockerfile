@@ -13,8 +13,16 @@ RUN apt-get update  -y \
     sudo \
     software-properties-common
 
+#Set user and password
+RUN useradd -rm -d /home/lucy -s /bin/bash -g root -G sudo -u 1001 lucy
+RUN echo lucy:passlucy | chpasswd
+
+#Avoids asking for password
+RUN echo "lucy ALL=(ALL:ALL) NOPASSWD: ALL" |  EDITOR="tee -a"  visudo
+
+
 #Creates and set the working directory
-WORKDIR /home/ansible_controller
+WORKDIR /home/lucy
 
 #Copy ssh script
 COPY startup.sh .
@@ -29,15 +37,10 @@ COPY ./src ./src
 #Install dependencies
 RUN npm install
 
-#Set user and password
-RUN useradd -rm -d /home/ansible_controller -s /bin/bash -g root -G sudo -u 1001 ansible_controller
-RUN echo ansible_controller:12345 | chpasswd
-
-#Avoids asking for password
-RUN echo "ansible_controller ALL=(ALL:ALL) NOPASSWD: ALL" |  EDITOR="tee -a"  visudo
-
 #Creates .ssh dir
-RUN mkdir -p /home/ansible_controller/.ssh
+RUN mkdir -p /home/lucy/.ssh
+
+EXPOSE 3000
 
 #Runs ssh script and starts the hello-world app
-CMD ["/bin/bash", "/home/ansible_controller/startup.sh"]
+CMD ["/bin/bash", "/home/lucy/startup.sh"]
