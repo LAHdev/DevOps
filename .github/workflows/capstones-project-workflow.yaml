@@ -10,6 +10,7 @@ jobs:
               name: Run tests
               runs-on: ubuntu-latest
               steps:
+             
               - name: Load repository
                 uses: actions/checkout@v3
 
@@ -17,12 +18,12 @@ jobs:
                 run:  | 
                       cd capstone_project/hello-world/
                       npm install
-                      pwd
-                      ls                     
+                                        
               - name: Run tests
                 run: |
                       cd capstone_project/hello-world/
                       npm run test
+                      
               - name: Check for success
                 if: ${{ success() }}
                 run: echo "success"
@@ -33,7 +34,7 @@ jobs:
           if: ${{ needs.testJob.result == 'success' }}
           steps:
             - name: Checkout code
-              uses: actions/checkout@v2
+              uses: actions/checkout@v3
 
             - name: Build Docker image
               run: |
